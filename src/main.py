@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+
 @app.route('/transcription', methods=['POST'])
 def receive_transcription():
     try:
@@ -37,4 +38,4 @@ def receive_transcription():
 
 if __name__ == '__main__':
     # Run Flask app
-    app.run(host='0.0.0.0', port=5056, debug=True)
+    app.run(host='0.0.0.0', port=5056)
