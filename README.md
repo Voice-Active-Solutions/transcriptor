@@ -31,6 +31,12 @@ curl -X POST http://127.0.0.1:5056/transcription \
      -d '{"transcription": "This is a test transcription."}'
 ```
 
+Or if you prefer to use HTTPie:
+
+```bash
+http POST 127.0.0.1:5056/transcription "transcription=This is a test transcription."
+```
+
 You should see the following response:
 
 ```json
@@ -40,10 +46,12 @@ You should see the following response:
 }
 ```
 
-## Configuring IBM Watson
+## Build the container image
 
-You can configure the IBM Watson Speech to Text service to use the callback URL like this:
+You can then build the web service as a container image using the Dockerfile:
 
-```bash
-curl -X POST -u "apikey:{apikey}" "{url}/v1/register_callback?callback_url=http://http://127.0.0.1:5056/transcription/results&user_secret=ThisIsMySecret"
+``bash
+docker build -t transcriptor .
+docker run -p 5056:5056 transcriptor
 ```
+
