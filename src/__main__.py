@@ -4,6 +4,6 @@ def main(params):
               "Content-Type": "application/json",
           },
           
-          "message": "Transcription received successfully"
+          "body": "Transcription received successfully"
       }
 
