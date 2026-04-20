@@ -11,8 +11,8 @@ WORKDIR /usr/app
 COPY src/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/main.py ./
+COPY src/app.py ./
 
-EXPOSE 5056
+EXPOSE 8080
 
-CMD ["python", "main.py"]
+CMD ["python", "app.py"]
