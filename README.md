@@ -63,7 +63,7 @@ You can deploy directly from the GitHub repo to IBM Code Engine like this:
 ibmcloud ce application create --name transcriptor \
     --build-source https://github.com/Voice-Active-Solutions/transcriptor.git \
     --build-strategy buildpacks --build-context-dir /src/ \
-    --cpu 0.25 --memory 1G --max-scale 4 --concurrency 6 \
+    --cpu 0.25 --memory 1G --max-scale 4 --scale-down-delay 8 \
     --port 8080
 ```
 
