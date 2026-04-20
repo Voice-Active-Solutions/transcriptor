@@ -3,30 +3,37 @@ import os
 
 app = Flask(__name__)
 
-@app.route("/post-data", methods=["POST"])
-def post_data():
+@app.route('/transcription', methods=['POST'])
+def receive_transcription():
     try:
-        # Ensure request is JSON
+        # Ensure request contains JSON
         if not request.is_json:
-            return jsonify({"error": "Request must be JSON"}), 400
+            return jsonify({"error": "Invalid content type. Expected application/json"}), 400
 
         data = request.get_json()
 
-        # Validate required fields
-        if "name" not in data or not isinstance(data["name"], str):
-            return jsonify({"error": "Missing or invalid 'name' field"}), 400
+        # Validate required field
+        if 'transcription' not in data or not isinstance(data['transcription'], str):
+            return jsonify({"error": "Missing or invalid 'transcription' field"}), 400
 
-        # Example processing
-        response_message = f"Hello, {data['name']}! Your data was received."
+        transcription_text = data['transcription'].strip()
 
+        # Handle empty transcription
+        if not transcription_text:
+            return jsonify({"error": "Transcription cannot be empty"}), 400
+
+        # Process transcription (example: log it)
+        print(f"Received transcription: {transcription_text}")
+
+        # Respond with success
         return jsonify({
-            "status": "success",
-            "message": response_message,
-            "received": data
+            "message": "Transcription received successfully",
+            "length": len(transcription_text)
         }), 200
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        # Catch unexpected errors
+        return jsonify({"error": f"Server error: {str(e)}"}), 500
 
 
 if __name__ == "__main__":

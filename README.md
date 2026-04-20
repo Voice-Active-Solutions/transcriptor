@@ -20,13 +20,13 @@ pip install -r requirements.txt
 ### Starting the web application
 
 ```bash
-python src/main.py
+python src/app.py
 ```
 
 ### Sending a Transcript
 
 ```bash
-curl -X POST http://127.0.0.1:5056/transcription \
+curl -X POST http://127.0.0.1:8080/transcription \
      -H "Content-Type: application/json" \
      -d '{"transcription": "This is a test transcription."}'
 ```
@@ -34,7 +34,7 @@ curl -X POST http://127.0.0.1:5056/transcription \
 Or if you prefer to use HTTPie:
 
 ```bash
-http POST 127.0.0.1:5056/transcription "transcription=This is a test transcription."
+http POST 127.0.0.1:8080/transcription "transcription=This is a test transcription."
 ```
 
 You should see the following response:
@@ -50,8 +50,20 @@ You should see the following response:
 
 You can then build the web service as a container image using the Dockerfile:
 
-``bash
+```bash
 docker build -t transcriptor .
-docker run -p 5056:5056 transcriptor
+docker run -p 8080:8080 transcriptor
+```
+
+## Deploy as a Code Engine Application
+
+You can deploy directly from the GitHub repo to IBM Code Engine like this:
+
+```bash
+ibmcloud ce application create --name transcriptor \
+    --build-source https://github.com/Voice-Active-Solutions/transcriptor.git \
+    --build-strategy buildpacks --build-context-dir /src/ \
+    --cpu 0.25 --memory 1G --max-scale 4 --concurrency 6 \
+    --port 8080
 ```
 
